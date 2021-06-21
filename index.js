@@ -6,11 +6,14 @@ const app = Express();
 const server = http.createServer(app);
 const io = require("socket.io")(server, {
     cors: {
-        origin: "http://localhost:3200/",
+        origin: true,
         methods: ["GET", "POST"]
     }
 });
-const port = 3200;
+const dotenv = require("dotenv");
+dotenv.config();
+
+const port = process.env.PORT || 3200;
 
 app.use(cors());
 
@@ -33,6 +36,6 @@ io.on("connection", (socket) => {
     })
 });
 
-// app.get("/", (req, res) => res.send("hello"));
+app.get("/", (req, res) => res.send("hello"));
 
 server.listen(port, () => console.log("Server running in port ", port));
